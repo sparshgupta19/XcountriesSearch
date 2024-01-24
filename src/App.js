@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./App.css";
+import "./styles.css";
 
 export default function App() {
   const [data, setData] = useState([]);
@@ -28,14 +28,14 @@ export default function App() {
       <div className="searchBar">
         <input
           type="text"
-          placeholder="Search for countries..."
+          placeholder="Search for a country"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
       <div className="containerStyle">
         {filteredCountries.map((item) => (
-          <div className="cardStyle" key={item.cca3}>
+          <div className="countryCard" key={item.cca3}>
             <img
               src={item.flags.png}
               alt="country-flag"
