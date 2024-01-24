@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import "./App.css";
 
-function App() {
+export default function App() {
+  const [data, setData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const getCountriesData = async () => {
+    try {
+      const res = await fetch("https://restcountries.com/v3.1/all");
+      const countries = await res.json();
+      setData(countries);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    getCountriesData();
+  }, []);
+
+  const filteredCountries = data.filter((item) =>
+    item.name.common.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="searchBar">
+        <input
+          type="text"
+          placeholder="Search for countries..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+      <div className="containerStyle">
+        {filteredCountries.map((item) => (
+          <div className="cardStyle" key={item.cca3}>
+            <img
+              src={item.flags.png}
+              alt="country-flag"
+              width={100}
+              height={100}
+            />
+            <h2>{item.name.common}</h2>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
-
-export default App;
