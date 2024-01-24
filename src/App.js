@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./styles.css";
+import "./App.css";
 
 export default function App() {
   const [data, setData] = useState([]);
